@@ -1,9 +1,13 @@
 import { createBrowserRouter, isRouteErrorResponse, useRouteError } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import ViteDefaultPage from "@/pages/vite-default-page";
+
+import LandingLayout from "@/layouts/landing-layout";
+import LandingPage from "@/pages/landing-page";
+import LoginPage from "@/pages/auth/login-page";
+import RegisterPage from "@/pages/auth/register-page";
 
 function AppErrorBoundary() {
-    let error = useRouteError();
+    const error = useRouteError();
     if (isRouteErrorResponse(error)) {
         return (
             <>
@@ -29,8 +33,21 @@ function AppErrorBoundary() {
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <ViteDefaultPage />,
+        children: [
+            {
+                element: <LandingPage />,
+                path: "/",
+            },
+            {
+                element: <LoginPage />,
+                path: "/login",
+            },
+            {
+                element: <RegisterPage />,
+                path: "/register",
+            }
+        ],
+        element: <LandingLayout />,
         ErrorBoundary: AppErrorBoundary,
     },
 ]);
